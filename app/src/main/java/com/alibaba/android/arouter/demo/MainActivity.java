@@ -14,11 +14,14 @@ import android.widget.Toast;
 
 import com.alibaba.android.arouter.demo.testinject.TestObj;
 import com.alibaba.android.arouter.demo.testinject.TestParcelable;
+import com.alibaba.android.arouter.demo.testinject.TestParcelableList;
 import com.alibaba.android.arouter.demo.testservice.HelloService;
 import com.alibaba.android.arouter.demo.testservice.SingleService;
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -127,6 +130,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 TestParcelable testParcelable = new TestParcelable("jack", 666);
                 TestObj testObj = new TestObj("Rose", 777);
 
+                ArrayList<TestParcelable> arrayList = new ArrayList<>();
+                arrayList.add(testParcelable);
+                TestParcelableList testParcelableList = new TestParcelableList(10, arrayList);
+
                 ARouter.getInstance().build("/test/activity1")
                         .withString("name", "老王")
                         .withInt("age", 18)
@@ -134,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .withLong("high", 180)
                         .withString("url", "https://a.b.c")
                         .withParcelable("pac", testParcelable)
+                        .withParcelableArrayList("pac_list", testParcelableList.getList())
                         .withObject("obj", testObj)
                         .navigation();
                 break;
